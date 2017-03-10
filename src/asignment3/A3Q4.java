@@ -7,6 +7,7 @@ import static becker.robots.Direction.NORTH;
 import static becker.robots.Direction.SOUTH;
 import static becker.robots.Direction.WEST;
 import becker.robots.Robot;
+import becker.robots.RobotSE;
 import becker.robots.Thing;
 import becker.robots.Wall;
 
@@ -28,7 +29,7 @@ public class A3Q4 {
         //creates a city named kw
         City kw = new City();
         //creates aa new robot named bob
-        Robot steve = new Robot(kw, 3, 2, Direction.EAST);
+        RobotSE steve = new RobotSE(kw, 2, 2, SOUTH);
 
         //createing the walls on 1,1 
         new Wall(kw, 1, 1, Direction.NORTH);
@@ -37,12 +38,11 @@ public class A3Q4 {
         new Wall(kw, 1, 2, NORTH);
         new Wall(kw, 2, 1, WEST);
 
-        new Wall(kw, 2, 4, EAST);
-
+        //new Wall(kw, 2, 4, EAST);
         new Wall(kw, 3, 1, WEST);
         new Wall(kw, 3, 1, SOUTH);
 
-        // new Wall(kw, 3, 2, SOUTH);
+        new Wall(kw, 3, 2, SOUTH);
         new Wall(kw, 3, 3, SOUTH);
 
         new Wall(kw, 3, 4, EAST);
@@ -54,28 +54,33 @@ public class A3Q4 {
         new Wall(kw, 1, 4, EAST);
 
         for (;;) {
-            while (!steve.frontIsClear()) {
-                steve.turnLeft();
-            }
+            //find the wall
             if (steve.frontIsClear()) {
                 steve.move();
-
-                if (steve.frontIsClear()) {
-                    steve.turnLeft();
-                    steve.turnLeft();
-                    steve.turnLeft();
-
-                    if (steve.frontIsClear()) {
-                        steve.move();
-                        break;
-                    }
-                }
-            } else if (!steve.frontIsClear()) {
+            }
+            if (!steve.frontIsClear()) {
+                steve.turnRight();
+            }
+            //hugs the wall
+            if (steve.frontIsClear()) {
+                steve.move();
                 steve.turnLeft();
+                if (!steve.frontIsClear()) {
+                    steve.turnRight();
+                    //when it reaches the end it stops
+                } else {
+                    steve.move();
+                    break;
+                }
+                //turnes it off the walls
+                if (!steve.frontIsClear()) {
+                    steve.turnRight();
 
+                }
             }
 
         }
 
     }
+
 }
